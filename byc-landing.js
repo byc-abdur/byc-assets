@@ -85,7 +85,7 @@ window.BYC_SETTINGS = Object.assign({
   logUrl: "https://script.google.com/macros/s/AKfycbxl2i76Xbt46TOvoGshoa2yr1FbiS9nosvlC0z1aNJXQJEvDfkoYCBbx1KwzSvIBeom/exec",
 
   /* Answers that mean "not a fit yet". These applicants see a kind message instead of your calendar. */
-  notAFit: ["Student or recent graduate", "0 to 2 years", "Not right now"],
+  notAFit: ["Student or recent graduate", "Not right now"],
 
   /* Applicants based in these countries see a kind message instead of your calendar. */
   notAFitCountries: ["Pakistan"]
