@@ -91,6 +91,9 @@ window.BYC_SETTINGS = Object.assign({
   /* Where applications are saved. Paste your Google Apps Script web app link here
      (see byc-applications-sheet-script.gs). While this is empty, answers are NOT saved anywhere
      unless the person books, in which case Calendly keeps them. */
+  /* Google Analytics 4 measurement ID. Leave empty to turn tracking off. */
+  gaId: "G-ETXNCX7MGG",
+
   logUrl: "https://script.google.com/macros/s/AKfycbxl2i76Xbt46TOvoGshoa2yr1FbiS9nosvlC0z1aNJXQJEvDfkoYCBbx1KwzSvIBeom/exec",
 
   /* Answers that mean "not a fit yet". These applicants see a kind message instead of your calendar. */
@@ -103,6 +106,12 @@ window.BYC_SETTINGS = Object.assign({
 
 (function(){
   var S=window.BYC_SETTINGS||{}, host=document.getElementById('byc-lp'); if(!host) return;
+  /* Google Analytics 4: page views plus lead events (generate_lead, book_audit, application_declined). */
+  if(S.gaId && !window.__bycGa){ window.__bycGa=1; window.dataLayer=window.dataLayer||[];
+    window.gtag=window.gtag||function(){window.dataLayer.push(arguments);};
+    window.gtag('js',new Date()); window.gtag('config',S.gaId);
+    var ga=document.createElement('script'); ga.async=true; ga.src='https://www.googletagmanager.com/gtag/js?id='+encodeURIComponent(S.gaId); document.head.appendChild(ga); }
+  function track(name,params){ try{ if(S.gaId&&window.gtag) window.gtag('event',name,params||{}); }catch(e){} }
   /* Remove the host page's padding and light background around the block (Carrd adds both), so no white edges show */
   try{ document.documentElement.style.background='#0B1229'; document.body.style.background='#0B1229';
     for(var el=host.parentElement; el&&el!==document.body; el=el.parentElement){ el.style.setProperty('padding','0','important'); el.style.setProperty('background','transparent','important'); el.style.setProperty('max-width','none','important'); } }catch(e){}
@@ -279,7 +288,11 @@ window.BYC_SETTINGS = Object.assign({
     var el=$(id); if(!reduce){el.classList.remove('fade');void el.offsetWidth;el.classList.add('fade');}
     var app=$('#apply'), r=app.getBoundingClientRect(); if(r.top<0) app.scrollIntoView({behavior:reduce?'auto':'smooth',block:'start'});}
 
-  function log(status,extra){ if(!S.logUrl) return;
+  function log(status,extra){
+    if(status==='Qualified') track('generate_lead',{lead_status:'qualified'});
+    else if(status==='Booked') track('book_audit',{lead_status:'booked'});
+    else track('application_declined',{reason:String(status).replace(/^Not a fit \(|\)$/g,'')});
+    if(!S.logUrl) return;
     var d={time:new Date().toISOString(),status:status,experience:(A.experience||[])[0]||'',goal:(A.goal||[])[0]||'',invest:(A.invest||[])[0]||''};
     for(var k in (extra||{})) d[k]=extra[k];
     try{fetch(S.logUrl,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(d)});}catch(e){} }
