@@ -18,7 +18,7 @@ window.BYC_SETTINGS = Object.assign({
   testimonialShape: "portrait",     /* "portrait" (9:16, YouTube Shorts / phone) or "landscape" (16:9, Zoom style) */
   testimonials: [
     { video: "https://youtube.com/shorts/tdSLUQVON6k", name: "Muhammad Umer Nawaz", result: "Senior Accountant" },
-    { video: "https://youtube.com/shorts/y1DqG5Hp2kk", name: "Abigail", result: "", featured: true },
+    { video: "https://youtube.com/shorts/y1DqG5Hp2kk", name: "Abigail", result: "Risk & Compliance Program Lead", featured: true },
     { video: "https://youtube.com/shorts/mEyVXNDnHLc", name: "Bhavya Bhatia", result: "Brand Strategist & Marketing Executive" },
     { video: "https://youtube.com/shorts/8jYtWuzCyZI", name: "Raja Naveed", result: "Account Strategist" }
   ],
