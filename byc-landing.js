@@ -111,7 +111,7 @@ window.BYC_SETTINGS = Object.assign({
     window.gtag=window.gtag||function(){window.dataLayer.push(arguments);};
     window.gtag('js',new Date()); window.gtag('config',S.gaId);
     var ga=document.createElement('script'); ga.async=true; ga.src='https://www.googletagmanager.com/gtag/js?id='+encodeURIComponent(S.gaId); document.head.appendChild(ga); }
-  function track(name,params){ try{ if(S.gaId&&window.gtag) window.gtag('event',name,params||{}); }catch(e){} }
+  function gaTrack(name,params){ try{ if(S.gaId&&window.gtag) window.gtag('event',name,params||{}); }catch(e){} }
   /* Remove the host page's padding and light background around the block (Carrd adds both), so no white edges show */
   try{ document.documentElement.style.background='#0B1229'; document.body.style.background='#0B1229';
     for(var el=host.parentElement; el&&el!==document.body; el=el.parentElement){ el.style.setProperty('padding','0','important'); el.style.setProperty('background','transparent','important'); el.style.setProperty('max-width','none','important'); } }catch(e){}
@@ -289,9 +289,9 @@ window.BYC_SETTINGS = Object.assign({
     var app=$('#apply'), r=app.getBoundingClientRect(); if(r.top<0) app.scrollIntoView({behavior:reduce?'auto':'smooth',block:'start'});}
 
   function log(status,extra){
-    if(status==='Qualified') track('generate_lead',{lead_status:'qualified'});
-    else if(status==='Booked') track('book_audit',{lead_status:'booked'});
-    else track('application_declined',{reason:String(status).replace(/^Not a fit \(|\)$/g,'')});
+    if(status==='Qualified') gaTrack('generate_lead',{lead_status:'qualified'});
+    else if(status==='Booked') gaTrack('book_audit',{lead_status:'booked'});
+    else gaTrack('application_declined',{reason:String(status).replace(/^Not a fit \(|\)$/g,'')});
     if(!S.logUrl) return;
     var d={time:new Date().toISOString(),status:status,experience:(A.experience||[])[0]||'',goal:(A.goal||[])[0]||'',invest:(A.invest||[])[0]||''};
     for(var k in (extra||{})) d[k]=extra[k];
