@@ -101,7 +101,7 @@ window.BYC_SETTINGS = Object.assign({
   notAFit: ["Student or recent graduate", "Not right now"],
 
   /* Applicants based in these countries see a kind message instead of your calendar. */
-  notAFitCountries: ["Pakistan"]
+  notAFitCountries: ["Pakistan", "India"]
 }, window.BYC_SETTINGS || {});
 /* Error reporter: if this page's code ever breaks for a visitor, write it to the "Errors" tab of the leads sheet (max 3 per visit). */
 (function(){var S=window.BYC_SETTINGS||{},n=0;
